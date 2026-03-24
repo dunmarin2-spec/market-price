@@ -19,8 +19,8 @@
             gap: 20px; max-width: 1400px; margin: 0 auto; 
         }
 
-        /* 🚨 문제의 overflow: hidden; 삭제 완료! 이제 메뉴가 밖으로 잘 튀어나옵니다! */
-        .asset-card { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.04); border: 1px solid #e1e5ee; display: flex; flex-direction: column; height: 350px; }
+        /* 🚨 형님! 여기 height를 350px -> 480px로 훌쩍 늘렸습니다! */
+        .asset-card { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.04); border: 1px solid #e1e5ee; display: flex; flex-direction: column; height: 480px; }
         
         .asset-header { margin-bottom: 10px; }
         .asset-title { font-size: 1.1rem; font-weight: 900; display: flex; align-items: center; gap: 6px; }
@@ -40,63 +40,38 @@
     </div>
 
     <div class="dashboard-grid">
-        
         <div class="asset-card">
             <div class="asset-header"><div class="asset-title">🇺🇸 NASDAQ 100</div></div>
-            <div class="tradingview-widget-container">
-                <div id="tv_nasdaq" style="height: 100%;"></div>
-            </div>
+            <div class="tradingview-widget-container"><div id="tv_nasdaq" style="height: 100%;"></div></div>
         </div>
-
         <div class="asset-card">
             <div class="asset-header"><div class="asset-title">🇺🇸 S&P 500 <span class="asset-sub">(코스닥 대체)</span></div></div>
-            <div class="tradingview-widget-container">
-                <div id="tv_sp500" style="height: 100%;"></div>
-            </div>
+            <div class="tradingview-widget-container"><div id="tv_sp500" style="height: 100%;"></div></div>
         </div>
-
         <div class="asset-card">
             <div class="asset-header"><div class="asset-title">🇰🇷 KOSPI <span class="asset-sub">(EWY ETF)</span></div></div>
-            <div class="tradingview-widget-container">
-                <div id="tv_kospi" style="height: 100%;"></div>
-            </div>
+            <div class="tradingview-widget-container"><div id="tv_kospi" style="height: 100%;"></div></div>
         </div>
-
         <div class="asset-card">
             <div class="asset-header"><div class="asset-title">₿ BITCOIN</div></div>
-            <div class="tradingview-widget-container">
-                <div id="tv_btc" style="height: 100%;"></div>
-            </div>
+            <div class="tradingview-widget-container"><div id="tv_btc" style="height: 100%;"></div></div>
         </div>
-
         <div class="asset-card">
             <div class="asset-header"><div class="asset-title">📀 GOLD</div></div>
-            <div class="tradingview-widget-container">
-                <div id="tv_gold" style="height: 100%;"></div>
-            </div>
+            <div class="tradingview-widget-container"><div id="tv_gold" style="height: 100%;"></div></div>
         </div>
-
         <div class="asset-card">
             <div class="asset-header"><div class="asset-title">🧱 COPPER <span class="asset-sub">(CPER ETF)</span></div></div>
-            <div class="tradingview-widget-container">
-                <div id="tv_copper" style="height: 100%;"></div>
-            </div>
+            <div class="tradingview-widget-container"><div id="tv_copper" style="height: 100%;"></div></div>
         </div>
-
         <div class="asset-card">
             <div class="asset-header"><div class="asset-title">🛢️ CRUDE OIL</div></div>
-            <div class="tradingview-widget-container">
-                <div id="tv_oil" style="height: 100%;"></div>
-            </div>
+            <div class="tradingview-widget-container"><div id="tv_oil" style="height: 100%;"></div></div>
         </div>
-
         <div class="asset-card">
             <div class="asset-header"><div class="asset-title">🔥 NATURAL GAS <span class="asset-sub">(UNG ETF)</span></div></div>
-            <div class="tradingview-widget-container">
-                <div id="tv_gas" style="height: 100%;"></div>
-            </div>
+            <div class="tradingview-widget-container"><div id="tv_gas" style="height: 100%;"></div></div>
         </div>
-
     </div>
 
     <script type="text/javascript">
@@ -118,14 +93,14 @@
         }
 
         window.onload = function() {
-            createWidget("CAPITALCOM:US100", "tv_nasdaq"); // 1. 나스닥
-            createWidget("CAPITALCOM:US500", "tv_sp500");  // 2. S&P 500
-            createWidget("AMEX:EWY", "tv_kospi");          // 3. 코스피
-            createWidget("BINANCE:BTCUSD", "tv_btc");      // 4. 비트코인
-            createWidget("TVC:GOLD", "tv_gold");           // 5. 금
-            createWidget("AMEX:CPER", "tv_copper");        // 6. 구리
-            createWidget("TVC:USOIL", "tv_oil");           // 7. 원유
-            createWidget("AMEX:UNG", "tv_gas");            // 8. 천연가스
+            createWidget("CAPITALCOM:US100", "tv_nasdaq"); 
+            createWidget("CAPITALCOM:US500", "tv_sp500");  
+            createWidget("AMEX:EWY", "tv_kospi");          
+            createWidget("BINANCE:BTCUSD", "tv_btc");      
+            createWidget("TVC:GOLD", "tv_gold");           
+            createWidget("AMEX:CPER", "tv_copper");        
+            createWidget("TVC:USOIL", "tv_oil");           
+            createWidget("AMEX:UNG", "tv_gas");            
         };
     </script>
 </body>
