@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌍 글로벌 8대 자산 터미널</title>
-    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <title>🌍 글로벌 8대 자산 터미널 (Real Data)</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style>
-        :root { --up: #d63031; --down: #0984e3; --bg: #f4f6f8; }
+        :root { --bg: #f4f6f8; }
         body { margin: 0; font-family: 'Pretendard', sans-serif; background: var(--bg); color: #2d3436; padding: 20px; }
         
         .header-main { max-width: 1400px; margin: 0 auto 30px; text-align: left; }
@@ -20,241 +19,116 @@
             gap: 20px; max-width: 1400px; margin: 0 auto; 
         }
 
-        .asset-card { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.04); border: 1px solid #e1e5ee; display: flex; flex-direction: column; }
+        .asset-card { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.04); border: 1px solid #e1e5ee; display: flex; flex-direction: column; height: 350px; overflow: hidden; }
         
-        .asset-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .asset-header { margin-bottom: 10px; }
         .asset-title { font-size: 1.1rem; font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
-        .btn-group { display: flex; gap: 4px; background: #f1f2f6; padding: 4px; border-radius: 8px; }
-        .btn-group button { 
-            border: none; padding: 5px 10px; border-radius: 6px; font-weight: 700; cursor: pointer;
-            background: transparent; color: #636e72; transition: 0.2s; font-size: 0.75rem;
-        }
-        .btn-group button.active { background: white; color: var(--up); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-
-        /* 🚨 차트 영역 높이를 260px로 아주 멱살 잡고 강제 고정시킴 */
-        .chart-box { height: 260px; width: 100%; position: relative; flex-grow: 1; }
-        
-        .loading-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #b2bec3; font-weight: 600; }
+        /* 트레이딩뷰 위젯 컨테이너 설정 */
+        .tradingview-widget-container { height: 100%; width: 100%; flex-grow: 1; }
+        .tradingview-widget-container__widget { height: 100%; width: 100%; }
 
         @media (min-width: 1200px) { .dashboard-grid { grid-template-columns: repeat(4, 1fr); } }
     </style>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 </head>
 <body>
 
     <div class="header-main">
         <h1>Global <span>Macro</span> Terminal</h1>
-        <p>전 세계 8대 주요 자산 (주식·코인·귀금속·에너지) 실시간 통합 보드</p>
+        <p>전 세계 8대 주요 자산 100% 실제 데이터 (TradingView API)</p>
     </div>
 
     <div class="dashboard-grid">
+        
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">🇺🇸 NASDAQ 100</div>
-                <div class="btn-group" id="group-nasdaq">
-                    <button onclick="updateChart('nasdaq', 'month', this)">월</button>
-                    <button onclick="updateChart('nasdaq', 'week', this)">주</button>
-                    <button onclick="updateChart('nasdaq', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('nasdaq', 'min', this)">분</button>
-                </div>
+            <div class="asset-header"><div class="asset-title">🇺🇸 NASDAQ 100</div></div>
+            <div class="tradingview-widget-container">
+                <div id="tv_nasdaq" style="height: 100%;"></div>
             </div>
-            <div id="chart-nasdaq" class="chart-box"><div class="loading-text">데이터 수신중...</div></div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">🇰🇷 KOSPI</div>
-                <div class="btn-group" id="group-kospi">
-                    <button onclick="updateChart('kospi', 'month', this)">월</button>
-                    <button onclick="updateChart('kospi', 'week', this)">주</button>
-                    <button onclick="updateChart('kospi', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('kospi', 'min', this)">분</button>
-                </div>
+            <div class="asset-header"><div class="asset-title">🇰🇷 KOSPI</div></div>
+            <div class="tradingview-widget-container">
+                <div id="tv_kospi" style="height: 100%;"></div>
             </div>
-            <div id="chart-kospi" class="chart-box"><div class="loading-text">데이터 수신중...</div></div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">🇰🇷 KOSDAQ</div>
-                <div class="btn-group" id="group-kosdaq">
-                    <button onclick="updateChart('kosdaq', 'month', this)">월</button>
-                    <button onclick="updateChart('kosdaq', 'week', this)">주</button>
-                    <button onclick="updateChart('kosdaq', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('kosdaq', 'min', this)">분</button>
-                </div>
+            <div class="asset-header"><div class="asset-title">🇰🇷 KOSDAQ</div></div>
+            <div class="tradingview-widget-container">
+                <div id="tv_kosdaq" style="height: 100%;"></div>
             </div>
-            <div id="chart-kosdaq" class="chart-box"><div class="loading-text">데이터 수신중...</div></div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">₿ BITCOIN</div>
-                <div class="btn-group" id="group-btc">
-                    <button onclick="updateChart('btc', 'month', this)">월</button>
-                    <button onclick="updateChart('btc', 'week', this)">주</button>
-                    <button onclick="updateChart('btc', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('btc', 'min', this)">분</button>
-                </div>
+            <div class="asset-header"><div class="asset-title">₿ BITCOIN</div></div>
+            <div class="tradingview-widget-container">
+                <div id="tv_btc" style="height: 100%;"></div>
             </div>
-            <div id="chart-btc" class="chart-box"><div class="loading-text">데이터 수신중...</div></div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">📀 GOLD</div>
-                <div class="btn-group" id="group-gold">
-                    <button onclick="updateChart('gold', 'month', this)">월</button>
-                    <button onclick="updateChart('gold', 'week', this)">주</button>
-                    <button onclick="updateChart('gold', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('gold', 'min', this)">분</button>
-                </div>
+            <div class="asset-header"><div class="asset-title">📀 GOLD</div></div>
+            <div class="tradingview-widget-container">
+                <div id="tv_gold" style="height: 100%;"></div>
             </div>
-            <div id="chart-gold" class="chart-box"><div class="loading-text">데이터 수신중...</div></div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">🧱 COPPER</div>
-                <div class="btn-group" id="group-copper">
-                    <button onclick="updateChart('copper', 'month', this)">월</button>
-                    <button onclick="updateChart('copper', 'week', this)">주</button>
-                    <button onclick="updateChart('copper', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('copper', 'min', this)">분</button>
-                </div>
+            <div class="asset-header"><div class="asset-title">🧱 COPPER</div></div>
+            <div class="tradingview-widget-container">
+                <div id="tv_copper" style="height: 100%;"></div>
             </div>
-            <div id="chart-copper" class="chart-box"><div class="loading-text">데이터 수신중...</div></div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">🛢️ CRUDE OIL</div>
-                <div class="btn-group" id="group-oil">
-                    <button onclick="updateChart('oil', 'month', this)">월</button>
-                    <button onclick="updateChart('oil', 'week', this)">주</button>
-                    <button onclick="updateChart('oil', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('oil', 'min', this)">분</button>
-                </div>
+            <div class="asset-header"><div class="asset-title">🛢️ CRUDE OIL</div></div>
+            <div class="tradingview-widget-container">
+                <div id="tv_oil" style="height: 100%;"></div>
             </div>
-            <div id="chart-oil" class="chart-box"><div class="loading-text">데이터 수신중...</div></div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">🔥 NATURAL GAS</div>
-                <div class="btn-group" id="group-gas">
-                    <button onclick="updateChart('gas', 'month', this)">월</button>
-                    <button onclick="updateChart('gas', 'week', this)">주</button>
-                    <button onclick="updateChart('gas', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('gas', 'min', this)">분</button>
-                </div>
+            <div class="asset-header"><div class="asset-title">🔥 NATURAL GAS</div></div>
+            <div class="tradingview-widget-container">
+                <div id="tv_gas" style="height: 100%;"></div>
             </div>
-            <div id="chart-gas" class="chart-box"><div class="loading-text">데이터 수신중...</div></div>
         </div>
+
     </div>
 
-    <script>
-        const assets = ['nasdaq', 'kospi', 'kosdaq', 'btc', 'gold', 'copper', 'oil', 'gas'];
-        const charts = {};
-        const series = {};
+    <script type="text/javascript">
+        // 트레이딩뷰 위젯 공통 옵션 생성 함수
+        function createWidget(symbol, containerId) {
+            new TradingView.widget({
+                "autosize": true,
+                "symbol": symbol,
+                "interval": "D",           // 기본 일봉 (D)
+                "timezone": "Asia/Seoul",  // 한국 시간 기준
+                "theme": "light",          // 화이트 테마
+                "style": "1",              // 캔들차트
+                "locale": "kr",            // 한국어
+                "enable_publishing": false,
+                "hide_top_toolbar": false, // 상단 툴바 활성화 (여기서 월/주/일/분 변경 가능!)
+                "hide_legend": true,       // 불필요한 레전드 숨김
+                "save_image": false,
+                "container_id": containerId
+            });
+        }
 
-        const basePrices = { 
-            nasdaq: 18200, kospi: 2750.80, kosdaq: 890.50, btc: 67000, 
-            gold: 2180, copper: 4.10, oil: 82.50, gas: 1.85 
+        // 각 자산별 실제 심볼(Ticker) 입력하여 차트 생성
+        window.onload = function() {
+            createWidget("NASDAQ:NDX", "tv_nasdaq");     // 나스닥 100
+            createWidget("KRX:KOSPI", "tv_kospi");       // 코스피
+            createWidget("KRX:KOSDAQ", "tv_kosdaq");     // 코스닥
+            createWidget("BINANCE:BTCUSD", "tv_btc");    // 비트코인 (바이낸스 기준)
+            createWidget("TVC:GOLD", "tv_gold");         // 금
+            createWidget("TVC:COPPER", "tv_copper");     // 구리
+            createWidget("TVC:USOIL", "tv_oil");         // 원유(WTI)
+            createWidget("TVC:NATGAS", "tv_gas");        // 천연가스
         };
-
-        // 🚨 절대 에러 안나는 데이터 생성기 (유닉스 타임스탬프만 사용)
-        function generateData(base, count, timeframe) {
-            let data = [];
-            let curr = base;
-            let timestamp = 1704067200; // 2024년 1월 1일 자정 (안전빵 숫자)
-
-            let step = 86400; // 기본 일봉 (하루를 초로 환산)
-            if (timeframe === 'min') step = 60;
-            else if (timeframe === 'week') step = 86400 * 7;
-            else if (timeframe === 'month') step = 86400 * 30;
-
-            for(let i=0; i<count; i++) {
-                let open = curr;
-                let volatility = base * 0.015; 
-                let close = curr + (Math.random() - 0.45) * volatility;
-                let high = Math.max(open, close) + (Math.random() * (volatility * 0.5));
-                let low = Math.min(open, close) - (Math.random() * (volatility * 0.5));
-                
-                data.push({ 
-                    time: timestamp + (i * step), 
-                    open: Number(Math.max(0.1, open).toFixed(2)), 
-                    high: Number(Math.max(0.1, high).toFixed(2)), 
-                    low: Number(Math.max(0.1, low).toFixed(2)), 
-                    close: Number(Math.max(0.1, close).toFixed(2)) 
-                });
-                curr = close;
-            }
-            return data;
-        }
-
-        // 🚨 차트 업데이트용 함수
-        function updateChart(asset, timeframe, btnElement) {
-            try {
-                const group = document.getElementById(`group-${asset}`);
-                group.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                if (btnElement) btnElement.classList.add('active');
-
-                const dataCount = timeframe === 'min' ? 60 : 40;
-                const data = generateData(basePrices[asset], dataCount, timeframe);
-                
-                series[asset].setData(data);
-                charts[asset].timeScale().fitContent();
-            } catch (error) {
-                console.error("차트 데이터 업데이트 에러:", error);
-            }
-        }
-
-        // 🚨 메인 렌더링 함수 (하나가 죽어도 나머지는 살게 try-catch 철갑을 둘렀습니다)
-        function initAllCharts() {
-            assets.forEach(asset => {
-                try {
-                    const container = document.getElementById(`chart-${asset}`);
-                    container.innerHTML = ''; // 로딩 텍스트 삭제
-                    
-                    // 크기 자동 조절(autoSize) 빼버리고, HTML 크기 그대로 때려 박음
-                    charts[asset] = LightweightCharts.createChart(container, {
-                        width: container.clientWidth,
-                        height: container.clientHeight || 260,
-                        layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#333' },
-                        grid: { vertLines: { color: '#f0f2f5' }, horzLines: { color: '#f0f2f5' } },
-                        timeScale: { borderColor: '#e1e5ee', timeVisible: true },
-                    });
-                    
-                    series[asset] = charts[asset].addCandlestickSeries({
-                        upColor: '#d63031', downColor: '#0984e3',
-                        borderUpColor: '#d63031', borderDownColor: '#0984e3',
-                        wickUpColor: '#d63031', wickDownColor: '#0984e3',
-                    });
-
-                    // 데이터 세팅
-                    const defaultBtn = document.querySelector(`#group-${asset} .default-active`);
-                    updateChart(asset, 'day', defaultBtn);
-                } catch (e) {
-                    console.error(`${asset} 차트 생성 중 개빡치는 에러 발생:`, e);
-                }
-            });
-
-            // 화면 크기 변할 때만 차트 사이즈 다시 잡아줌
-            window.addEventListener('resize', () => {
-                assets.forEach(asset => {
-                    if (charts[asset]) {
-                        const container = document.getElementById(`chart-${asset}`);
-                        charts[asset].applyOptions({ width: container.clientWidth });
-                    }
-                });
-            });
-        }
-
-        // 🚨 무조건 HTML 태그가 다 불러와진 다음(0.3초 뒤)에 차트를 그리도록 지시
-        document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(initAllCharts, 300);
-        });
     </script>
 </body>
 </html>
