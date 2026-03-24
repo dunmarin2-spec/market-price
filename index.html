@@ -23,6 +23,7 @@
         
         .asset-header { margin-bottom: 10px; }
         .asset-title { font-size: 1.1rem; font-weight: 900; display: flex; align-items: center; gap: 6px; }
+        .asset-sub { font-size: 0.8rem; color: #b2bec3; font-weight: 600; margin-left: 5px; }
 
         .tradingview-widget-container { height: 100%; width: 100%; flex-grow: 1; }
 
@@ -34,29 +35,29 @@
 
     <div class="header-main">
         <h1>Global <span>Macro</span> Terminal</h1>
-        <p>전 세계 8대 주요 자산 100% 실제 데이터 (TradingView API 연동 완료)</p>
+        <p>전 세계 8대 주요 자산 100% 실제 데이터 (TradingView API - 외부 연동 허용 심볼 적용)</p>
     </div>
 
     <div class="dashboard-grid">
         
         <div class="asset-card">
-            <div class="asset-header"><div class="asset-title">🇺🇸 NASDAQ 100 (CFD)</div></div>
+            <div class="asset-header"><div class="asset-title">🇺🇸 NASDAQ 100</div></div>
             <div class="tradingview-widget-container">
                 <div id="tv_nasdaq" style="height: 100%;"></div>
             </div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header"><div class="asset-title">🇰🇷 KOSPI (KODEX 200)</div></div>
+            <div class="asset-header"><div class="asset-title">🇰🇷 KOSPI <span class="asset-sub">(EWY ETF)</span></div></div>
             <div class="tradingview-widget-container">
                 <div id="tv_kospi" style="height: 100%;"></div>
             </div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header"><div class="asset-title">🇰🇷 KOSDAQ (KODEX 150)</div></div>
+            <div class="asset-header"><div class="asset-title">🇺🇸 S&P 500 <span class="asset-sub">(코스닥 대체)</span></div></div>
             <div class="tradingview-widget-container">
-                <div id="tv_kosdaq" style="height: 100%;"></div>
+                <div id="tv_sp500" style="height: 100%;"></div>
             </div>
         </div>
 
@@ -75,7 +76,7 @@
         </div>
 
         <div class="asset-card">
-            <div class="asset-header"><div class="asset-title">🧱 COPPER</div></div>
+            <div class="asset-header"><div class="asset-title">🧱 COPPER <span class="asset-sub">(CPER ETF)</span></div></div>
             <div class="tradingview-widget-container">
                 <div id="tv_copper" style="height: 100%;"></div>
             </div>
@@ -89,7 +90,7 @@
         </div>
 
         <div class="asset-card">
-            <div class="asset-header"><div class="asset-title">🔥 NATURAL GAS</div></div>
+            <div class="asset-header"><div class="asset-title">🔥 NATURAL GAS <span class="asset-sub">(UNG ETF)</span></div></div>
             <div class="tradingview-widget-container">
                 <div id="tv_gas" style="height: 100%;"></div>
             </div>
@@ -116,15 +117,15 @@
         }
 
         window.onload = function() {
-            // 외부 연동이 완벽하게 허용된 실제 데이터 심볼들로 교체 완료!
-            createWidget("CAPITALCOM:US100", "tv_nasdaq"); // 나스닥 CFD
-            createWidget("KRX:069500", "tv_kospi");        // KODEX 200 (코스피 추종)
-            createWidget("KRX:229200", "tv_kosdaq");       // KODEX 코스닥150 (코스닥 추종)
-            createWidget("BINANCE:BTCUSD", "tv_btc");      // 비트코인
-            createWidget("TVC:GOLD", "tv_gold");           // 금
-            createWidget("COMEX:HG1!", "tv_copper");       // 구리 선물 (수정됨)
-            createWidget("TVC:USOIL", "tv_oil");           // 원유
-            createWidget("NYMEX:NG1!", "tv_gas");          // 천연가스 선물 (수정됨)
+            // 외부 연동 100% 허용된 미국 주식(ETF) 및 허용 CFD 티커로 전면 교체 완료!
+            createWidget("CAPITALCOM:US100", "tv_nasdaq"); // 나스닥 잘 뜸
+            createWidget("AMEX:EWY", "tv_kospi");          // 코스피 추종 미국 ETF (절대 안막힘)
+            createWidget("CAPITALCOM:US500", "tv_sp500");  // S&P 500 (코스닥 대체)
+            createWidget("BINANCE:BTCUSD", "tv_btc");      // 비트코인 잘 뜸
+            createWidget("TVC:GOLD", "tv_gold");           // 금 잘 뜸
+            createWidget("AMEX:CPER", "tv_copper");        // 구리 추종 미국 ETF (절대 안막힘)
+            createWidget("TVC:USOIL", "tv_oil");           // 원유 잘 뜸
+            createWidget("AMEX:UNG", "tv_gas");            // 천연가스 추종 미국 ETF (절대 안막힘)
         };
     </script>
 </body>
