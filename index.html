@@ -14,7 +14,6 @@
         .header-main h1 { font-size: 2.2rem; font-weight: 900; margin: 0; letter-spacing: -1px; }
         .header-main p { color: #636e72; margin-top: 5px; font-weight: 500; }
 
-        /* 8개가 예쁘게 들어가는 반응형 그리드 */
         .dashboard-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
@@ -50,10 +49,10 @@
             <div class="asset-header">
                 <div class="asset-title">🇺🇸 NASDAQ 100</div>
                 <div class="btn-group" id="group-nasdaq">
-                    <button onclick="updateChart('nasdaq', 'month')">월</button>
-                    <button onclick="updateChart('nasdaq', 'week')">주</button>
-                    <button onclick="updateChart('nasdaq', 'day')" class="active">일</button>
-                    <button onclick="updateChart('nasdaq', 'min')">분</button>
+                    <button onclick="updateChart('nasdaq', 'month', this)">월</button>
+                    <button onclick="updateChart('nasdaq', 'week', this)">주</button>
+                    <button onclick="updateChart('nasdaq', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('nasdaq', 'min', this)">분</button>
                 </div>
             </div>
             <div id="chart-nasdaq" class="chart-box"></div>
@@ -63,10 +62,10 @@
             <div class="asset-header">
                 <div class="asset-title">₿ BITCOIN</div>
                 <div class="btn-group" id="group-btc">
-                    <button onclick="updateChart('btc', 'month')">월</button>
-                    <button onclick="updateChart('btc', 'week')">주</button>
-                    <button onclick="updateChart('btc', 'day')" class="active">일</button>
-                    <button onclick="updateChart('btc', 'min')">분</button>
+                    <button onclick="updateChart('btc', 'month', this)">월</button>
+                    <button onclick="updateChart('btc', 'week', this)">주</button>
+                    <button onclick="updateChart('btc', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('btc', 'min', this)">분</button>
                 </div>
             </div>
             <div id="chart-btc" class="chart-box"></div>
@@ -76,10 +75,10 @@
             <div class="asset-header">
                 <div class="asset-title">💠 ETHEREUM</div>
                 <div class="btn-group" id="group-eth">
-                    <button onclick="updateChart('eth', 'month')">월</button>
-                    <button onclick="updateChart('eth', 'week')">주</button>
-                    <button onclick="updateChart('eth', 'day')" class="active">일</button>
-                    <button onclick="updateChart('eth', 'min')">분</button>
+                    <button onclick="updateChart('eth', 'month', this)">월</button>
+                    <button onclick="updateChart('eth', 'week', this)">주</button>
+                    <button onclick="updateChart('eth', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('eth', 'min', this)">분</button>
                 </div>
             </div>
             <div id="chart-eth" class="chart-box"></div>
@@ -89,10 +88,10 @@
             <div class="asset-header">
                 <div class="asset-title">📀 GOLD</div>
                 <div class="btn-group" id="group-gold">
-                    <button onclick="updateChart('gold', 'month')">월</button>
-                    <button onclick="updateChart('gold', 'week')">주</button>
-                    <button onclick="updateChart('gold', 'day')" class="active">일</button>
-                    <button onclick="updateChart('gold', 'min')">분</button>
+                    <button onclick="updateChart('gold', 'month', this)">월</button>
+                    <button onclick="updateChart('gold', 'week', this)">주</button>
+                    <button onclick="updateChart('gold', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('gold', 'min', this)">분</button>
                 </div>
             </div>
             <div id="chart-gold" class="chart-box"></div>
@@ -102,10 +101,10 @@
             <div class="asset-header">
                 <div class="asset-title">🪙 SILVER</div>
                 <div class="btn-group" id="group-silver">
-                    <button onclick="updateChart('silver', 'month')">월</button>
-                    <button onclick="updateChart('silver', 'week')">주</button>
-                    <button onclick="updateChart('silver', 'day')" class="active">일</button>
-                    <button onclick="updateChart('silver', 'min')">분</button>
+                    <button onclick="updateChart('silver', 'month', this)">월</button>
+                    <button onclick="updateChart('silver', 'week', this)">주</button>
+                    <button onclick="updateChart('silver', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('silver', 'min', this)">분</button>
                 </div>
             </div>
             <div id="chart-silver" class="chart-box"></div>
@@ -115,10 +114,10 @@
             <div class="asset-header">
                 <div class="asset-title">🧱 COPPER</div>
                 <div class="btn-group" id="group-copper">
-                    <button onclick="updateChart('copper', 'month')">월</button>
-                    <button onclick="updateChart('copper', 'week')">주</button>
-                    <button onclick="updateChart('copper', 'day')" class="active">일</button>
-                    <button onclick="updateChart('copper', 'min')">분</button>
+                    <button onclick="updateChart('copper', 'month', this)">월</button>
+                    <button onclick="updateChart('copper', 'week', this)">주</button>
+                    <button onclick="updateChart('copper', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('copper', 'min', this)">분</button>
                 </div>
             </div>
             <div id="chart-copper" class="chart-box"></div>
@@ -126,12 +125,12 @@
 
         <div class="asset-card">
             <div class="asset-header">
-                <div class="asset-title">🛢️ CRUDE OIL (WTI)</div>
+                <div class="asset-title">🛢️ CRUDE OIL</div>
                 <div class="btn-group" id="group-oil">
-                    <button onclick="updateChart('oil', 'month')">월</button>
-                    <button onclick="updateChart('oil', 'week')">주</button>
-                    <button onclick="updateChart('oil', 'day')" class="active">일</button>
-                    <button onclick="updateChart('oil', 'min')">분</button>
+                    <button onclick="updateChart('oil', 'month', this)">월</button>
+                    <button onclick="updateChart('oil', 'week', this)">주</button>
+                    <button onclick="updateChart('oil', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('oil', 'min', this)">분</button>
                 </div>
             </div>
             <div id="chart-oil" class="chart-box"></div>
@@ -141,10 +140,10 @@
             <div class="asset-header">
                 <div class="asset-title">🔥 NATURAL GAS</div>
                 <div class="btn-group" id="group-gas">
-                    <button onclick="updateChart('gas', 'month')">월</button>
-                    <button onclick="updateChart('gas', 'week')">주</button>
-                    <button onclick="updateChart('gas', 'day')" class="active">일</button>
-                    <button onclick="updateChart('gas', 'min')">분</button>
+                    <button onclick="updateChart('gas', 'month', this)">월</button>
+                    <button onclick="updateChart('gas', 'week', this)">주</button>
+                    <button onclick="updateChart('gas', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('gas', 'min', this)">분</button>
                 </div>
             </div>
             <div id="chart-gas" class="chart-box"></div>
@@ -152,12 +151,12 @@
     </div>
 
     <script>
-        // 자산 목록 (8개로 확장)
+        // 자산 목록
         const assets = ['nasdaq', 'btc', 'eth', 'gold', 'silver', 'copper', 'oil', 'gas'];
         const charts = {};
         const series = {};
 
-        // 차트 생성기
+        // 차트 초기화
         assets.forEach(asset => {
             const container = document.getElementById(`chart-${asset}`);
             charts[asset] = LightweightCharts.createChart(container, {
@@ -172,57 +171,63 @@
             });
         });
 
-        // 가짜 데이터 생성 함수 (자산별 변동성 반영)
-        function generateData(base, count, isMin) {
+        // 에러를 유발했던 날짜 로직을 안전한 유닉스 타임스탬프(초) 방식으로 전면 교체
+        function generateData(base, count, timeframe) {
             let data = [];
             let curr = base;
+            let timeStamp = 1704067200; // 2024년 1월 1일 기준 시작
+            
+            let step = 86400; // 하루(일봉) 초
+            if (timeframe === 'min') step = 60;
+            else if (timeframe === 'week') step = 86400 * 7;
+            else if (timeframe === 'month') step = 86400 * 30;
+
             for(let i=0; i<count; i++) {
                 let open = curr;
-                // 변동폭 설정 (천연가스 같은 건 변동성이 크니까 조금 더 흔들어줍니다)
                 let volatility = base * 0.02; 
                 let close = curr + (Math.random() - 0.45) * volatility;
                 let high = Math.max(open, close) + (Math.random() * (volatility * 0.5));
                 let low = Math.min(open, close) - (Math.random() * (volatility * 0.5));
-                let time = isMin ? 1711270000 + (i * 60) : `2026-01-${(10+i).toString().padStart(2, '0')}`;
                 
-                // 가격이 마이너스가 되지 않도록 방어 로직
-                data.push({ time, open: Math.max(0.1, open), high: Math.max(0.1, high), low: Math.max(0.1, low), close: Math.max(0.1, close) });
+                data.push({ 
+                    time: timeStamp + (i * step), 
+                    open: Math.max(0.1, open), 
+                    high: Math.max(0.1, high), 
+                    low: Math.max(0.1, low), 
+                    close: Math.max(0.1, close) 
+                });
                 curr = close;
             }
             return data;
         }
 
-        // 각 자산별 기준 가격 (대략적인 현재 시세 반영)
         const basePrices = { 
-            nasdaq: 18200, 
-            btc: 67000, 
-            eth: 3500, 
-            gold: 2180, 
-            silver: 25.50, 
-            copper: 4.10, 
-            oil: 82.50, 
-            gas: 1.85 
+            nasdaq: 18200, btc: 67000, eth: 3500, gold: 2180, 
+            silver: 25.50, copper: 4.10, oil: 82.50, gas: 1.85 
         };
 
-        // 차트 업데이트 함수
-        function updateChart(asset, timeframe) {
+        // 버튼 클릭 에러 방지용 파라미터(btnElement) 추가
+        function updateChart(asset, timeframe, btnElement) {
             const group = document.getElementById(`group-${asset}`);
             group.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            
+            if (btnElement) {
+                btnElement.classList.add('active');
+            }
 
-            const dataCount = timeframe === 'min' ? 60 : 30; // 분봉은 더 길게
-            const data = generateData(basePrices[asset], dataCount, timeframe === 'min');
+            const dataCount = timeframe === 'min' ? 60 : 40;
+            const data = generateData(basePrices[asset], dataCount, timeframe);
             series[asset].setData(data);
             charts[asset].timeScale().fitContent();
         }
 
-        // 초기 실행 (전부 일봉으로 세팅)
+        // 초기 화면 렌더링 (에러 안 나게 수정 완료)
         assets.forEach(asset => {
-            const mockEvent = { target: document.querySelector(`#group-${asset} button:nth-child(3)`) };
-            updateChart(asset, 'day');
+            const defaultBtn = document.querySelector(`#group-${asset} .default-active`);
+            updateChart(asset, 'day', defaultBtn);
         });
 
-        // 브라우저 크기 조절 시 차트 사이즈 자동 맞춤
+        // 창 크기 조절 대응
         window.addEventListener('resize', () => {
             assets.forEach(asset => charts[asset].applyOptions({ width: document.getElementById(`chart-${asset}`).clientWidth }));
         });
