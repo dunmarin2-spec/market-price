@@ -23,7 +23,7 @@
         .asset-card { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.04); border: 1px solid #e1e5ee; display: flex; flex-direction: column; }
         
         .asset-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .asset-title { font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+        .asset-title { font-size: 1.1rem; font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
         .btn-group { display: flex; gap: 4px; background: #f1f2f6; padding: 4px; border-radius: 8px; }
         .btn-group button { 
@@ -32,8 +32,11 @@
         }
         .btn-group button.active { background: white; color: var(--up); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* 핵심: 높이를 명확히 지정하고 position을 relative로! */
+        /* 그래프 영역 강제 확보 */
         .chart-box { height: 260px; width: 100%; position: relative; flex-grow: 1; }
+        
+        /* 로딩 텍스트 디자인 */
+        .loading-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #b2bec3; font-weight: 600; }
 
         @media (min-width: 1200px) { .dashboard-grid { grid-template-columns: repeat(4, 1fr); } }
     </style>
@@ -42,7 +45,7 @@
 
     <div class="header-main">
         <h1>Global <span>Macro</span> Terminal</h1>
-        <p>전 세계 8대 주요 자산 (주식·코인·귀금속·에너지) 실시간 통합 보드</p>
+        <p>전 세계 8대 주요 자산 실시간 통합 보드</p>
     </div>
 
     <div class="dashboard-grid">
@@ -56,7 +59,33 @@
                     <button onclick="updateChart('nasdaq', 'min', this)">분</button>
                 </div>
             </div>
-            <div id="chart-nasdaq" class="chart-box"></div>
+            <div id="chart-nasdaq" class="chart-box"><div class="loading-text">차트 로딩중...</div></div>
+        </div>
+
+        <div class="asset-card">
+            <div class="asset-header">
+                <div class="asset-title">🇰🇷 KOSPI</div>
+                <div class="btn-group" id="group-kospi">
+                    <button onclick="updateChart('kospi', 'month', this)">월</button>
+                    <button onclick="updateChart('kospi', 'week', this)">주</button>
+                    <button onclick="updateChart('kospi', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('kospi', 'min', this)">분</button>
+                </div>
+            </div>
+            <div id="chart-kospi" class="chart-box"><div class="loading-text">차트 로딩중...</div></div>
+        </div>
+
+        <div class="asset-card">
+            <div class="asset-header">
+                <div class="asset-title">🇰🇷 KOSDAQ</div>
+                <div class="btn-group" id="group-kosdaq">
+                    <button onclick="updateChart('kosdaq', 'month', this)">월</button>
+                    <button onclick="updateChart('kosdaq', 'week', this)">주</button>
+                    <button onclick="updateChart('kosdaq', 'day', this)" class="default-active">일</button>
+                    <button onclick="updateChart('kosdaq', 'min', this)">분</button>
+                </div>
+            </div>
+            <div id="chart-kosdaq" class="chart-box"><div class="loading-text">차트 로딩중...</div></div>
         </div>
 
         <div class="asset-card">
@@ -69,20 +98,7 @@
                     <button onclick="updateChart('btc', 'min', this)">분</button>
                 </div>
             </div>
-            <div id="chart-btc" class="chart-box"></div>
-        </div>
-
-        <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">💠 ETHEREUM</div>
-                <div class="btn-group" id="group-eth">
-                    <button onclick="updateChart('eth', 'month', this)">월</button>
-                    <button onclick="updateChart('eth', 'week', this)">주</button>
-                    <button onclick="updateChart('eth', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('eth', 'min', this)">분</button>
-                </div>
-            </div>
-            <div id="chart-eth" class="chart-box"></div>
+            <div id="chart-btc" class="chart-box"><div class="loading-text">차트 로딩중...</div></div>
         </div>
 
         <div class="asset-card">
@@ -95,20 +111,7 @@
                     <button onclick="updateChart('gold', 'min', this)">분</button>
                 </div>
             </div>
-            <div id="chart-gold" class="chart-box"></div>
-        </div>
-
-        <div class="asset-card">
-            <div class="asset-header">
-                <div class="asset-title">🪙 SILVER</div>
-                <div class="btn-group" id="group-silver">
-                    <button onclick="updateChart('silver', 'month', this)">월</button>
-                    <button onclick="updateChart('silver', 'week', this)">주</button>
-                    <button onclick="updateChart('silver', 'day', this)" class="default-active">일</button>
-                    <button onclick="updateChart('silver', 'min', this)">분</button>
-                </div>
-            </div>
-            <div id="chart-silver" class="chart-box"></div>
+            <div id="chart-gold" class="chart-box"><div class="loading-text">차트 로딩중...</div></div>
         </div>
 
         <div class="asset-card">
@@ -121,7 +124,7 @@
                     <button onclick="updateChart('copper', 'min', this)">분</button>
                 </div>
             </div>
-            <div id="chart-copper" class="chart-box"></div>
+            <div id="chart-copper" class="chart-box"><div class="loading-text">차트 로딩중...</div></div>
         </div>
 
         <div class="asset-card">
@@ -134,7 +137,7 @@
                     <button onclick="updateChart('oil', 'min', this)">분</button>
                 </div>
             </div>
-            <div id="chart-oil" class="chart-box"></div>
+            <div id="chart-oil" class="chart-box"><div class="loading-text">차트 로딩중...</div></div>
         </div>
 
         <div class="asset-card">
@@ -147,53 +150,39 @@
                     <button onclick="updateChart('gas', 'min', this)">분</button>
                 </div>
             </div>
-            <div id="chart-gas" class="chart-box"></div>
+            <div id="chart-gas" class="chart-box"><div class="loading-text">차트 로딩중...</div></div>
         </div>
     </div>
 
     <script>
-        const assets = ['nasdaq', 'btc', 'eth', 'gold', 'silver', 'copper', 'oil', 'gas'];
+        // 나스닥이 무조건 배열 첫번째!
+        const assets = ['nasdaq', 'kospi', 'kosdaq', 'btc', 'gold', 'copper', 'oil', 'gas'];
         const charts = {};
         const series = {};
 
-        // 1. 차트 엔진 초기화 (autoSize: true 추가로 크기 버그 완벽 해결)
-        assets.forEach(asset => {
-            const container = document.getElementById(`chart-${asset}`);
-            charts[asset] = LightweightCharts.createChart(container, {
-                autoSize: true, // 이게 빠져서 아까 깡통이 된 겁니다 ㅠㅠ
-                layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#333' },
-                grid: { vertLines: { color: '#f0f2f5' }, horzLines: { color: '#f0f2f5' } },
-                timeScale: { borderColor: '#e1e5ee', timeVisible: true },
-            });
-            
-            series[asset] = charts[asset].addCandlestickSeries({
-                upColor: '#d63031', downColor: '#0984e3',
-                borderUpColor: '#d63031', borderDownColor: '#0984e3',
-                wickUpColor: '#d63031', wickDownColor: '#0984e3',
-            });
-        });
+        const basePrices = { 
+            nasdaq: 18200, kospi: 2750.80, kosdaq: 890.50, btc: 67000, 
+            gold: 2180, copper: 4.10, oil: 82.50, gas: 1.85 
+        };
 
-        // 2. 에러 안 나는 무적의 데이터 생성기 (날짜 포맷 YYYY-MM-DD 강제 적용)
+        // 절대 뻑나지 않는 날짜 및 캔들 데이터 생성기
         function generateData(base, count, timeframe) {
             let data = [];
             let curr = base;
-            // 시작 기준일 설정
             let d = new Date(2023, 0, 1); 
 
             for(let i=0; i<count; i++) {
                 let open = curr;
-                let volatility = base * 0.02; 
+                let volatility = base * 0.015; 
                 let close = curr + (Math.random() - 0.45) * volatility;
                 let high = Math.max(open, close) + (Math.random() * (volatility * 0.5));
                 let low = Math.min(open, close) - (Math.random() * (volatility * 0.5));
                 
                 let timeValue;
                 if (timeframe === 'min') {
-                    // 분봉은 초 단위 유닉스 타임스탬프
                     timeValue = Math.floor(d.getTime() / 1000);
                     d.setMinutes(d.getMinutes() + 1);
                 } else {
-                    // 일/주/월봉은 무조건 YYYY-MM-DD 포맷
                     const year = d.getFullYear();
                     const month = String(d.getMonth() + 1).padStart(2, '0');
                     const day = String(d.getDate()).padStart(2, '0');
@@ -204,50 +193,60 @@
                     else if (timeframe === 'month') d.setMonth(d.getMonth() + 1);
                 }
                 
-                // 음수 가격 방지
                 data.push({ 
                     time: timeValue, 
-                    open: Math.max(0.1, open), 
-                    high: Math.max(0.1, high), 
-                    low: Math.max(0.1, low), 
-                    close: Math.max(0.1, close) 
+                    open: Number(Math.max(0.1, open).toFixed(2)), 
+                    high: Number(Math.max(0.1, high).toFixed(2)), 
+                    low: Number(Math.max(0.1, low).toFixed(2)), 
+                    close: Number(Math.max(0.1, close).toFixed(2)) 
                 });
                 curr = close;
             }
             return data;
         }
 
-        const basePrices = { 
-            nasdaq: 18200, btc: 67000, eth: 3500, gold: 2180, 
-            silver: 25.50, copper: 4.10, oil: 82.50, gas: 1.85 
-        };
-
-        // 3. 차트 업데이트 로직
         function updateChart(asset, timeframe, btnElement) {
             try {
                 const group = document.getElementById(`group-${asset}`);
                 group.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                
                 if (btnElement) btnElement.classList.add('active');
 
                 const dataCount = timeframe === 'min' ? 60 : 40;
                 const data = generateData(basePrices[asset], dataCount, timeframe);
                 
-                // 데이터 삽입 및 화면 맞춤
                 series[asset].setData(data);
                 charts[asset].timeScale().fitContent();
             } catch (error) {
-                console.error(`형님! ${asset} 차트 그리다가 뻑났습니다:`, error);
+                console.error("차트 렌더링 에러:", error);
             }
         }
 
-        // 4. 최초 로딩 시 8개 차트 전부 일봉으로 렌더링
-        setTimeout(() => {
-            assets.forEach(asset => {
-                const defaultBtn = document.querySelector(`#group-${asset} .default-active`);
-                updateChart(asset, 'day', defaultBtn);
-            });
-        }, 100); // 레이아웃 잡힐 시간 0.1초 주고 실행!
+        // 브라우저가 화면을 다 그리고 나서(0.5초 뒤) 차트를 생성하도록 강제 지연
+        window.onload = function() {
+            setTimeout(() => {
+                assets.forEach(asset => {
+                    const container = document.getElementById(`chart-${asset}`);
+                    container.innerHTML = ''; // 로딩 텍스트 삭제
+                    
+                    charts[asset] = LightweightCharts.createChart(container, {
+                        autoSize: true, // 크기 자동 맞춤
+                        layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#333' },
+                        grid: { vertLines: { color: '#f0f2f5' }, horzLines: { color: '#f0f2f5' } },
+                        timeScale: { borderColor: '#e1e5ee', timeVisible: true },
+                    });
+                    
+                    series[asset] = charts[asset].addCandlestickSeries({
+                        upColor: '#d63031', downColor: '#0984e3',
+                        borderUpColor: '#d63031', borderDownColor: '#0984e3',
+                        wickUpColor: '#d63031', wickDownColor: '#0984e3',
+                    });
+
+                    // 초기 데이터 세팅
+                    const defaultBtn = document.querySelector(`#group-${asset} .default-active`);
+                    updateChart(asset, 'day', defaultBtn);
+                });
+            }, 500); // 0.5초 대기 후 실행! (이게 진짜 킬링 파트입니다)
+        };
     </script>
 </body>
 </html>
