@@ -19,7 +19,8 @@
             gap: 20px; max-width: 1400px; margin: 0 auto; 
         }
 
-        .asset-card { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.04); border: 1px solid #e1e5ee; display: flex; flex-direction: column; height: 350px; overflow: hidden; }
+        /* 🚨 문제의 overflow: hidden; 삭제 완료! 이제 메뉴가 밖으로 잘 튀어나옵니다! */
+        .asset-card { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.04); border: 1px solid #e1e5ee; display: flex; flex-direction: column; height: 350px; }
         
         .asset-header { margin-bottom: 10px; }
         .asset-title { font-size: 1.1rem; font-weight: 900; display: flex; align-items: center; gap: 6px; }
@@ -117,7 +118,6 @@
         }
 
         window.onload = function() {
-            // 자바스크립트 렌더링 순서도 HTML 순서에 맞게 깔끔하게 정리했습니다!
             createWidget("CAPITALCOM:US100", "tv_nasdaq"); // 1. 나스닥
             createWidget("CAPITALCOM:US500", "tv_sp500");  // 2. S&P 500
             createWidget("AMEX:EWY", "tv_kospi");          // 3. 코스피
