@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 글로벌 경제 지표 대시보드</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { --up-color: #d63031; --down-color: #0984e3; --bg-gray: #f5f6fa; }
+        body { margin: 0; font-family: 'Pretendard', sans-serif; background-color: var(--bg-gray); color: #2d3436; padding: 20px; }
+        
+        .header { max-width: 1000px; margin: 0 auto 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .header h1 { margin: 0; font-size: 1.8rem; font-weight: 900; }
+        .header p { margin: 5px 0 0; color: #636e72; font-size: 0.9rem; }
+
+        /* 지표 카드 그리드 */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+        
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        
+        .label { font-size: 0.85rem; font-weight: 700; color: #b2bec3; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .value { font-size: 1.6rem; font-weight: 900; margin-bottom: 5px; }
+        .change { font-size: 0.9rem; font-weight: 700; }
+        
+        /* 상승/하락 컬러 */
+        .up { color: var(--up-color); }
+        .down { color: var(--down-color); }
+
+        /* 차트 영역 */
+        .chart-container { margin-top: 15px; height: 60px; }
+
+        .refresh-status { font-size: 0.75rem; color: #00b894; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        .dot { width: 6px; height: 6px; background: #00b894; border-radius: 50%; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <h1>Global <span>Index</span></h1>
+            <p>전 세계 주요 지수 실시간 대시보드</p>
+        </div>
+        <div class="refresh-status"><span class="dot"></span> 실시간 데이터 수신 중</div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="label">🇺🇸 NASDAQ 100</div>
+            <div id="nasdaq-val" class="value">18,245.30</div>
+            <div id="nasdaq-chg" class="change up">+1.25% ▲</div>
+            <div class="chart-container"><canvas id="nasdaqChart"></canvas></div>
+        </div>
+
+        <div class="card">
+            <div class="label">₿ BITCOIN</div>
+            <div id="btc-val" class="value">$67,420</div>
+            <div id="btc-chg" class="change down">-0.42% ▼</div>
+            <div class="chart-container"><canvas id="btcChart"></canvas></div>
+        </div>
+
+        <div class="card">
+            <div class="label">💵 USD / KRW</div>
+            <div id="ex-val" class="value">1,345.50</div>
+            <div id="ex-chg" class="change up">+0.15% ▲</div>
+            <div class="chart-container"><canvas id="exChart"></canvas></div>
+        </div>
+
+        <div class="card">
+            <div class="label">📀 GOLD</div>
+            <div id="gold-val" class="value">$2,180.40</div>
+            <div id="gold-chg" class="change up">+0.88% ▲</div>
+            <div class="chart-container"><canvas id="goldChart"></canvas></div>
+        </div>
+    </div>
+
+    <script>
+        // 차트 초기화 함수
+        function createChart(id, color) {
+            const ctx = document.getElementById(id).getContext('2d');
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['', '', '', '', '', '', '', '', '', ''],
+                    datasets: [{
+                        data: Array.from({length: 10}, () => Math.floor(Math.random() * 100)),
+                        borderColor: color,
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        fill: false,
+                        tension: 0.4
+                    }]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { display: false }, y: { display: false } }
+                }
+            });
+        }
+
+        const nasdaqChart = createChart('nasdaqChart', '#d63031');
+        const btcChart = createChart('btcChart', '#0984e3');
+        const exChart = createChart('exChart', '#d63031');
+        const goldChart = createChart('goldChart', '#d63031');
+
+        // [핵심] 실시간 데이터 업데이트 시뮬레이션 (SWR/React Query 느낌)
+        setInterval(() => {
+            updateIndex('nasdaq', 18000, 200);
+            updateIndex('btc', 67000, 500);
+            updateIndex('ex', 1340, 10);
+            updateIndex('gold', 2100, 30);
+        }, 3000);
+
+        function updateIndex(id, base, range) {
+            const valEl = document.getElementById(`${id}-val`);
+            const chgEl = document.getElementById(`${id}-chg`);
+            
+            const newVal = base + (Math.random() * range);
+            const isUp = Math.random() > 0.4;
+            const chgPercent = (Math.random() * 2).toFixed(2);
+
+            valEl.innerText = id === 'btc' || id === 'gold' ? `$${newVal.toLocaleString(undefined, {minimumFractionDigits: 2})}` : newVal.toLocaleString(undefined, {minimumFractionDigits: 2});
+            chgEl.className = `change ${isUp ? 'up' : 'down'}`;
+            chgEl.innerText = `${isUp ? '+' : '-'}${chgPercent}% ${isUp ? '▲' : '▼'}`;
+        }
+    </script>
+</body>
+</html>
