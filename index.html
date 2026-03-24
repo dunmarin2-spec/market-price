@@ -24,9 +24,7 @@
         .asset-header { margin-bottom: 10px; }
         .asset-title { font-size: 1.1rem; font-weight: 900; display: flex; align-items: center; gap: 6px; }
 
-        /* 트레이딩뷰 위젯 컨테이너 설정 */
         .tradingview-widget-container { height: 100%; width: 100%; flex-grow: 1; }
-        .tradingview-widget-container__widget { height: 100%; width: 100%; }
 
         @media (min-width: 1200px) { .dashboard-grid { grid-template-columns: repeat(4, 1fr); } }
     </style>
@@ -36,27 +34,27 @@
 
     <div class="header-main">
         <h1>Global <span>Macro</span> Terminal</h1>
-        <p>전 세계 8대 주요 자산 100% 실제 데이터 (TradingView API)</p>
+        <p>전 세계 8대 주요 자산 100% 실제 데이터 (TradingView API 연동 완료)</p>
     </div>
 
     <div class="dashboard-grid">
         
         <div class="asset-card">
-            <div class="asset-header"><div class="asset-title">🇺🇸 NASDAQ 100</div></div>
+            <div class="asset-header"><div class="asset-title">🇺🇸 NASDAQ 100 (CFD)</div></div>
             <div class="tradingview-widget-container">
                 <div id="tv_nasdaq" style="height: 100%;"></div>
             </div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header"><div class="asset-title">🇰🇷 KOSPI</div></div>
+            <div class="asset-header"><div class="asset-title">🇰🇷 KOSPI (KODEX 200)</div></div>
             <div class="tradingview-widget-container">
                 <div id="tv_kospi" style="height: 100%;"></div>
             </div>
         </div>
 
         <div class="asset-card">
-            <div class="asset-header"><div class="asset-title">🇰🇷 KOSDAQ</div></div>
+            <div class="asset-header"><div class="asset-title">🇰🇷 KOSDAQ (KODEX 150)</div></div>
             <div class="tradingview-widget-container">
                 <div id="tv_kosdaq" style="height: 100%;"></div>
             </div>
@@ -100,34 +98,33 @@
     </div>
 
     <script type="text/javascript">
-        // 트레이딩뷰 위젯 공통 옵션 생성 함수
         function createWidget(symbol, containerId) {
             new TradingView.widget({
                 "autosize": true,
                 "symbol": symbol,
-                "interval": "D",           // 기본 일봉 (D)
-                "timezone": "Asia/Seoul",  // 한국 시간 기준
-                "theme": "light",          // 화이트 테마
-                "style": "1",              // 캔들차트
-                "locale": "kr",            // 한국어
+                "interval": "D",           
+                "timezone": "Asia/Seoul",  
+                "theme": "light",          
+                "style": "1",              
+                "locale": "kr",            
                 "enable_publishing": false,
-                "hide_top_toolbar": false, // 상단 툴바 활성화 (여기서 월/주/일/분 변경 가능!)
-                "hide_legend": true,       // 불필요한 레전드 숨김
+                "hide_top_toolbar": false, 
+                "hide_legend": true,       
                 "save_image": false,
                 "container_id": containerId
             });
         }
 
-        // 각 자산별 실제 심볼(Ticker) 입력하여 차트 생성
         window.onload = function() {
-            createWidget("NASDAQ:NDX", "tv_nasdaq");     // 나스닥 100
-            createWidget("KRX:KOSPI", "tv_kospi");       // 코스피
-            createWidget("KRX:KOSDAQ", "tv_kosdaq");     // 코스닥
-            createWidget("BINANCE:BTCUSD", "tv_btc");    // 비트코인 (바이낸스 기준)
-            createWidget("TVC:GOLD", "tv_gold");         // 금
-            createWidget("TVC:COPPER", "tv_copper");     // 구리
-            createWidget("TVC:USOIL", "tv_oil");         // 원유(WTI)
-            createWidget("TVC:NATGAS", "tv_gas");        // 천연가스
+            // 외부 연동이 완벽하게 허용된 실제 데이터 심볼들로 교체 완료!
+            createWidget("CAPITALCOM:US100", "tv_nasdaq"); // 나스닥 CFD
+            createWidget("KRX:069500", "tv_kospi");        // KODEX 200 (코스피 추종)
+            createWidget("KRX:229200", "tv_kosdaq");       // KODEX 코스닥150 (코스닥 추종)
+            createWidget("BINANCE:BTCUSD", "tv_btc");      // 비트코인
+            createWidget("TVC:GOLD", "tv_gold");           // 금
+            createWidget("COMEX:HG1!", "tv_copper");       // 구리 선물 (수정됨)
+            createWidget("TVC:USOIL", "tv_oil");           // 원유
+            createWidget("NYMEX:NG1!", "tv_gas");          // 천연가스 선물 (수정됨)
         };
     </script>
 </body>
